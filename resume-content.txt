@@ -1,0 +1,38 @@
+Leon Tan
+650-660-6307 | Redwood City, CA | leontann29@gmail.com | linkedin.com/in/leontan29 Seeking to apply analytical skills in business-facing roles with opportunities to develop stakeholder
+communication and presentation expertise.
+Education
+University of Illinois Urbana-Champaign Urbana, IL Master’s in Computer Science Expected Spring 2026 Coursework: Database Systems, Distributed Systems, Applied Machine Learning, Cloud Computing, Data Visualization
+University of California, San Diego San Diego, CA BS Cognitive Science - Human Computer Interaction(HCI) Concentration, Minor in Computer Science Class of 2023
+Experience
+Software Engineering Intern May 2024 – September 2024 Vitesse Data Redwood City, CA
+• Optimized clients’ SQL on data warehouse cluster, improving performance and response for various clients’ ETL processes. Helped to reduce 2 hours of daily ETL time for 3 banking clients.
+• Identified and resolved more than 50 issues in existing codebase, and incorporated unit tests for those deficiencies.
+• Collaborated with cross-functional teams to design and deploy software features aligned with client requirements
+and project milestones.
+Product Management / Product Design Intern Jan 2023 – April 2023 Kinoyume San Diego, CA
+• Defined product vision and roadmap by gathering requirements from restaurant stakeholders, prioritizing features based on customer insights and business impact.
+• Led a team of 3 product designers through iterative design cycles, conducted user testing to validate product decisions, and delivered a final stakeholder presentation showcasing measurable improvements in customer engagement and online conversions.
+• Designed and delivered a high-fidelity prototype that enhanced the digital ordering experience, resulting in a 19% increase in customer engagement and a 3% increase in online orders.
+Projects
+Trend Analysis and Data Quality Pipeline | OpenRefine, SQL, SQLite, GREL
+• Cleaned 400K+ restaurant menu records using OpenRefine, developing GREL transformations to fix temporal
+anomalies, price outliers, and integrity violations
+• Built SQL validation framework (SQLite) with 15+ integrity checks, ensuring data consistency for
+decade-by-decade price trend analysis.
+• Enabled identification of 3 distinct economic periods through menu price volatility patterns (1850–2020).
+Data Interpolation Pipeline Visualizations | Python, Data Transformation, RBF, Matplotlib
+• Developed mathematical interpolation framework to convert sparse, unstructured field measurements into regular
+grid data suitable for pattern analysis and decision-making.
+• Implemented multiple modeling approaches (6 kernel functions) to represent different physical relationships,
+enabling selection of optimal representation based on data characteristics.
+• Produced contour visualizations that transformed complex electric potential data into interpretable equipotential
+maps, facilitating identification of field patterns supporting scientific conclusions.
+Academic Research Dashboard | Python, Plotly, MYSQL, MongoDB, Neo4j
+• Wrote queries to discover trends in academic research data stored in MySQL, MongoDB, and Neo4j.
+• Built customizable dashboards to visualize research trends based on user input.
+• Extended these queries into reusable templates with Python/Plotly
+Technical Skills
+Languages: Java, Python, C/C++, SQL, JavaScript/Typescript, React, HTML/CSS
+Technologies: Tableau, Pandas, NumPy, Jupyter, MongoDB, Neo4j, AWS, Google Cloud Platform, Hadoop, Apache Spark, Kafka, Docker, Kubernetes
+Certificates: Google Advanced Data Analytics, Fundamentals of Computing

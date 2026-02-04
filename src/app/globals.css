@@ -1,0 +1,78 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #2d2d30;
+  --color-nav: #252527;
+  --color-surface: #363638;
+  --color-surface-hover: #3e3e41;
+  --color-border: #444447;
+  --color-text: #ffffff;
+  --color-text-secondary: #929292;
+  --color-accent: #8babf0;
+  --color-accent-hover: #a3bff5;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Roboto Mono", ui-monospace, monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background-color: var(--color-accent);
+  color: #2d2d30;
+}
+
+/* Card glow on hover */
+.card-glow {
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-glow:hover {
+  border-color: #8babf0;
+  box-shadow: 0 0 15px -3px rgba(139, 171, 240, 0.3), 0 0 6px -4px rgba(139, 171, 240, 0.2);
+}
+
+/* Scroll arrow bounce */
+@keyframes scroll-bounce {
+  0%, 100% {
+    transform: translateY(0);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translateY(10px);
+    opacity: 1;
+  }
+}
+
+.animate-scroll-bounce {
+  animation: scroll-bounce 2s ease-in-out infinite;
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.6s ease-out both;
+}
+
+.delay-100 { animation-delay: 0.1s; }
+.delay-200 { animation-delay: 0.2s; }
+.delay-300 { animation-delay: 0.3s; }
+.delay-400 { animation-delay: 0.4s; }
