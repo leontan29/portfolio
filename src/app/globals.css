@@ -1,16 +1,16 @@
 @import "tailwindcss";
 
 @theme {
-  --color-bg: #2d2d30;
-  --color-nav: #252527;
-  --color-surface: #363638;
-  --color-surface-hover: #3e3e41;
-  --color-border: #444447;
+  --color-bg: #0e0e0e;
+  --color-nav: #111111;
+  --color-surface: #181818;
+  --color-surface-hover: #212121;
+  --color-border: #2a2a2a;
   --color-text: #ffffff;
-  --color-text-secondary: #929292;
-  --color-accent: #8babf0;
-  --color-accent-hover: #a3bff5;
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --color-text-secondary: #a8a8a8;
+  --color-accent: #5b9cf5;
+  --color-accent-hover: #7bb3ff;
+  --font-sans: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "Roboto Mono", ui-monospace, monospace;
 }
 
@@ -28,7 +28,7 @@ body {
 
 ::selection {
   background-color: var(--color-accent);
-  color: #2d2d30;
+  color: #0e0e0e;
 }
 
 /* Card glow on hover */
@@ -37,8 +37,8 @@ body {
 }
 
 .card-glow:hover {
-  border-color: #8babf0;
-  box-shadow: 0 0 15px -3px rgba(139, 171, 240, 0.3), 0 0 6px -4px rgba(139, 171, 240, 0.2);
+  border-color: #5b9cf5;
+  box-shadow: 0 0 20px -3px rgba(91, 156, 245, 0.3), 0 0 8px -4px rgba(91, 156, 245, 0.2);
 }
 
 /* Scroll arrow bounce */

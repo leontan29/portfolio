@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
 
 const NAV_LINKS = [
@@ -12,26 +12,167 @@ const NAV_LINKS = [
   { label: "Contact", href: "#contact" },
 ];
 
+interface Particle {
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  size: number;
+  opacity: number;
+  glowSize: number;
+}
+
+function ParticleBackground() {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const particlesRef = useRef<Particle[]>([]);
+  const animationRef = useRef<number>(0);
+
+  const createParticles = useCallback((width: number, height: number) => {
+    const particleCount = Math.floor((width * height) / 25000); // Sparse distribution
+    const particles: Particle[] = [];
+
+    for (let i = 0; i < particleCount; i++) {
+      particles.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        vx: (Math.random() - 0.5) * 0.3, // Slow horizontal drift
+        vy: (Math.random() - 0.5) * 0.2 + 0.1, // Slight downward bias
+        size: Math.random() * 1.5 + 0.5, // 0.5-2px
+        opacity: Math.random() * 0.3 + 0.1, // 0.1-0.4 opacity
+        glowSize: Math.random() * 8 + 4, // Glow radius
+      });
+    }
+
+    return particles;
+  }, []);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    const handleResize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      particlesRef.current = createParticles(canvas.width, canvas.height);
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+
+    const animate = () => {
+      if (!ctx || !canvas) return;
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      particlesRef.current.forEach((particle) => {
+        // Update position
+        particle.x += particle.vx;
+        particle.y += particle.vy;
+
+        // Wrap around edges
+        if (particle.x < -10) particle.x = canvas.width + 10;
+        if (particle.x > canvas.width + 10) particle.x = -10;
+        if (particle.y < -10) particle.y = canvas.height + 10;
+        if (particle.y > canvas.height + 10) particle.y = -10;
+
+        // Draw subtle glow
+        const gradient = ctx.createRadialGradient(
+          particle.x,
+          particle.y,
+          0,
+          particle.x,
+          particle.y,
+          particle.glowSize
+        );
+        gradient.addColorStop(0, `rgba(91, 156, 245, ${particle.opacity * 0.2})`);
+        gradient.addColorStop(1, "rgba(91, 156, 245, 0)");
+        ctx.fillStyle = gradient;
+        ctx.beginPath();
+        ctx.arc(particle.x, particle.y, particle.glowSize, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Draw particle core
+        ctx.fillStyle = `rgba(180, 210, 255, ${particle.opacity})`;
+        ctx.beginPath();
+        ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      animationRef.current = requestAnimationFrame(animate);
+    };
+
+    animate();
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      cancelAnimationFrame(animationRef.current);
+    };
+  }, [createParticles]);
+
+  return (
+    <canvas
+      ref={canvasRef}
+      className="pointer-events-none fixed inset-0 z-0"
+      style={{ opacity: 0.8 }}
+    />
+  );
+}
+
+function AmbientGlow() {
+  return (
+    <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
+      {/* Top-left glow */}
+      <div
+        className="absolute -left-[30%] -top-[20%] h-[800px] w-[800px] rounded-full opacity-[0.04]"
+        style={{
+          background: "radial-gradient(circle, #5b9cf5 0%, transparent 50%)",
+          filter: "blur(120px)",
+        }}
+      />
+      {/* Center-right glow */}
+      <div
+        className="absolute right-[-20%] top-[25%] h-[700px] w-[700px] rounded-full opacity-[0.03]"
+        style={{
+          background: "radial-gradient(circle, #7b6cf5 0%, transparent 50%)",
+          filter: "blur(140px)",
+        }}
+      />
+      {/* Bottom-center glow */}
+      <div
+        className="absolute bottom-[5%] left-[20%] h-[750px] w-[750px] rounded-full opacity-[0.035]"
+        style={{
+          background: "radial-gradient(circle, #5b9cf5 0%, transparent 50%)",
+          filter: "blur(130px)",
+        }}
+      />
+    </div>
+  );
+}
+
 function Navbar() {
   const [open, setOpen] = useState(false);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-nav shadow-[0_1px_0_0_#444447,0_4px_12px_-2px_rgba(0,0,0,0.4)]">
-      <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-nav/80 shadow-[0_1px_0_0_#222222,0_4px_12px_-2px_rgba(0,0,0,0.6)] backdrop-blur-md">
+      <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-6 py-3 sm:px-8 sm:py-4 lg:px-12">
+        {/* Logo - far left */}
         <a
           href="#hero"
-          className="font-mono text-lg font-semibold tracking-tight text-accent"
+          className="font-mono text-lg font-bold tracking-tight text-accent sm:text-xl lg:text-2xl"
         >
           LT
         </a>
 
-        {/* Desktop */}
-        <ul className="hidden gap-8 md:flex">
+        {/* Desktop nav - center */}
+        <ul className="hidden items-center gap-6 md:flex lg:gap-8">
           {NAV_LINKS.map((link) => (
             <li key={link.label}>
               <a
                 href={link.href}
-                className="text-sm text-text-secondary transition-colors hover:text-accent"
+                className="font-mono text-xs text-text-secondary transition-colors hover:text-accent md:text-sm"
               >
                 {link.label}
               </a>
@@ -39,7 +180,16 @@ function Navbar() {
           ))}
         </ul>
 
-        {/* Mobile toggle */}
+        {/* Resume button - far right (desktop) */}
+        <a
+          href="/resume.pdf"
+          download
+          className="hidden rounded-md border border-accent px-3 py-1.5 font-mono text-xs font-medium text-accent transition-colors hover:bg-accent hover:text-bg md:inline-block md:rounded-lg md:px-4 md:py-2 md:text-sm"
+        >
+          Resume
+        </a>
+
+        {/* Mobile: hamburger */}
         <button
           onClick={() => setOpen(!open)}
           className="flex flex-col gap-1.5 md:hidden"
@@ -59,18 +209,28 @@ function Navbar() {
 
       {/* Mobile menu */}
       {open && (
-        <ul className="border-t border-border bg-nav px-6 py-4 md:hidden">
+        <ul className="border-t border-border bg-nav/95 px-6 py-4 backdrop-blur-md md:hidden">
           {NAV_LINKS.map((link) => (
             <li key={link.label}>
               <a
                 href={link.href}
                 onClick={() => setOpen(false)}
-                className="block py-2 text-sm text-text-secondary transition-colors hover:text-accent"
+                className="block py-2 font-mono text-sm text-text-secondary transition-colors hover:text-accent"
               >
                 {link.label}
               </a>
             </li>
           ))}
+          <li>
+            <a
+              href="/resume.pdf"
+              download
+              onClick={() => setOpen(false)}
+              className="mt-2 inline-block rounded-md border border-accent px-3 py-1.5 font-mono text-xs font-medium text-accent transition-colors hover:bg-accent hover:text-bg"
+            >
+              Resume
+            </a>
+          </li>
         </ul>
       )}
     </nav>
@@ -104,9 +264,7 @@ function Hero() {
           <p className="animate-fade-in-up font-mono text-sm font-medium tracking-widest text-accent uppercase">
             Software Engineer
           </p>
-          <h1 className="animate-fade-in-up delay-100 mt-4 font-mono text-5xl font-bold tracking-tight sm:text-6xl">
-            Leon Tan
-          </h1>
+          <h1 className="animate-fade-in-up delay-100 mt-4 text-5xl font-bold tracking-tight sm:text-6xl">Leon Tan</h1>
           <p className="animate-fade-in-up delay-200 mt-6 text-lg leading-relaxed text-text-secondary">
             Master&apos;s in Computer Science from the University of Illinois
             Urbana-Champaign. I specialize in backend systems, cloud computing,
@@ -116,13 +274,13 @@ function Hero() {
           <div className="animate-fade-in-up delay-300 mt-8 flex flex-wrap gap-4">
             <a
               href="#experience"
-              className="rounded-lg bg-accent px-6 py-3 text-sm font-medium text-bg transition-colors hover:bg-accent-hover"
+              className="rounded-lg bg-accent px-6 py-3 font-mono text-sm font-medium text-bg transition-colors hover:bg-accent-hover"
             >
               See Experience
             </a>
             <a
               href="#projects"
-              className="rounded-lg border border-border px-6 py-3 text-sm font-medium text-text transition-colors hover:bg-surface"
+              className="rounded-lg border border-border px-6 py-3 font-mono text-sm font-medium text-text transition-colors hover:bg-surface"
             >
               Explore Projects
             </a>
@@ -156,12 +314,12 @@ function Hero() {
 
 function Education() {
   const coursework = [
-    "Database Systems",
-    "Distributed Systems",
     "Applied Machine Learning",
     "Cloud Computing",
-    "Data Visualization",
     "Data Cleaning",
+    "Data Visualization",
+    "Database Systems",
+    "Distributed Systems",
   ];
 
   return (
@@ -196,12 +354,12 @@ function Education() {
                   </span>
                 </div>
                 <div className="mt-4">
-                  <p className="mb-3 text-sm font-medium text-text-secondary">Coursework</p>
+                  <p className="mb-3 font-mono text-xs font-medium tracking-wide text-text-secondary uppercase">Coursework</p>
                   <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
                     {coursework.map((course) => (
                       <div
                         key={course}
-                        className="rounded-lg border border-border bg-bg px-3 py-2 text-center text-sm text-text-secondary"
+                        className="rounded-md border border-accent/20 bg-accent/5 px-3 py-2 text-center text-sm text-text-secondary transition-colors hover:border-accent/40 hover:text-text"
                       >
                         {course}
                       </div>
@@ -478,10 +636,6 @@ function Contact() {
     <section id="contact" className="px-6 py-24">
       <div className="mx-auto max-w-5xl text-center">
         <SectionHeading title="Contact" />
-        <p className="mt-6 text-text-secondary">
-          I&apos;m currently looking for full-time opportunities. Feel free to
-          reach out!
-        </p>
         <div className="mt-8 flex flex-wrap justify-center gap-4">
           <a
             href="https://github.com/leontan29"
@@ -532,7 +686,7 @@ function Contact() {
 
 function Footer() {
   return (
-    <footer className="border-t border-border px-6 py-8">
+    <footer className="px-6 py-8">
       <div className="mx-auto max-w-5xl text-center text-sm text-text-secondary">
         &copy; {new Date().getFullYear()} Leon Tan. All rights reserved.
       </div>
@@ -543,7 +697,7 @@ function Footer() {
 function SectionHeading({ title }: { title: string }) {
   return (
     <div className="flex items-center gap-4">
-      <h2 className="font-mono text-2xl font-bold">{title}</h2>
+      <h2 className="text-2xl font-bold">{title}</h2>
       <div className="h-px flex-1 bg-border" />
     </div>
   );
@@ -552,8 +706,10 @@ function SectionHeading({ title }: { title: string }) {
 export default function Home() {
   return (
     <>
+      <AmbientGlow />
+      <ParticleBackground />
       <Navbar />
-      <main>
+      <main className="relative z-10">
         <Hero />
         <Education />
         <Experience />
