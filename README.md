@@ -1,0 +1,6 @@
+- Project title: "Leon Tan - Portfolio"
+- Brief description: Personal portfolio website showcasing my software engineering work
+- Tech stack: Next.js, React, Tailwind CSS, TypeScript
+- How to run locally: npm install, npm run dev
+- Deployment: Deployed on Vercel
+- Contact: Links to my GitHub and LinkedIn
