@@ -17,11 +17,7 @@ export const metadata: Metadata = {
   description:
     "Portfolio of Leon Tan — Software Engineer with a Master's in Computer Science from UIUC.",
   icons: {
-    icon: [
-      { url: "/favicon.ico", sizes: "any" },
-      { url: "/favicon.svg", type: "image/svg+xml" },
-    ],
-    apple: "/apple-touch-icon.png",
+    icon: '/favicon.ico',
   },
 };
 
