@@ -16,6 +16,13 @@ export const metadata: Metadata = {
   title: "Leon Tan | Software Engineer",
   description:
     "Portfolio of Leon Tan — Software Engineer with a Master's in Computer Science from UIUC.",
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/favicon.svg", type: "image/svg+xml" },
+    ],
+    apple: "/apple-touch-icon.png",
+  },
 };
 
 export default function RootLayout({
