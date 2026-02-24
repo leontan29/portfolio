@@ -262,14 +262,14 @@ function Hero() {
         {/* Text - right */}
         <div className="md:col-span-3">
           <p className="animate-fade-in-up font-mono text-sm font-medium tracking-widest text-accent uppercase">
-            Software Engineer
+            Builder | Technical Product Manager
           </p>
           <h1 className="animate-fade-in-up delay-100 mt-4 text-5xl font-bold tracking-tight sm:text-6xl">Leon Tan</h1>
           <p className="animate-fade-in-up delay-200 mt-6 text-lg leading-relaxed text-text-secondary">
-            Master&apos;s in Computer Science from the University of Illinois
-            Urbana-Champaign. I specialize in backend systems, cloud computing,
-            and data infrastructure. Seeking full-time opportunities in software
-            engineering where I can build impactful, scalable solutions.
+            Recent Master&apos;s in Computer Science graduate from UIUC with
+            experience in technical product management and software engineering.
+            I bridge the gap between engineering and business, building products
+            that solve real problems.
           </p>
           <div className="animate-fade-in-up delay-300 mt-8 flex flex-wrap gap-4">
             <a
@@ -353,6 +353,9 @@ function Education() {
                     Expected Spring 2026
                   </span>
                 </div>
+                <p className="mt-3 text-sm text-text-secondary">
+                  Building on a product and HCI foundation, this degree deepens expertise in systems, data, and cloud — enabling me to lead technical teams and make informed product decisions.
+                </p>
                 <div className="mt-4">
                   <p className="mb-3 font-mono text-xs font-medium tracking-wide text-text-secondary uppercase">Coursework</p>
                   <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
@@ -392,6 +395,9 @@ function Education() {
                     Class of 2023
                   </span>
                 </div>
+                <p className="mt-3 text-sm text-text-secondary">
+                  Grounded my understanding of user-centered design and human-computer interaction — the foundation for product thinking and building technology that people actually want to use.
+                </p>
               </div>
             </div>
           </div>
@@ -420,7 +426,7 @@ function Experience() {
                   <div>
                     <h3 className="text-xl font-semibold">Vitesse Data</h3>
                     <p className="mt-1 text-accent">
-                      Software Engineering Intern
+                      Presales Engineer
                     </p>
                   </div>
                   <span className="mt-2 text-sm text-text-secondary sm:mt-0 sm:shrink-0">

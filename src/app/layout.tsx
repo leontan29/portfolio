@@ -13,9 +13,9 @@ const robotoMono = Roboto_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Leon Tan | Software Engineer",
+  title: "Leon Tan - Technical Product Manager",
   description:
-    "Portfolio of Leon Tan — Software Engineer with a Master's in Computer Science from UIUC.",
+    "Portfolio of Leon Tan — Technical Product Manager and software engineer with a Master's in Computer Science from UIUC. Bridging engineering and business to build products that solve real problems.",
   icons: {
     icon: '/favicon.ico',
   },
